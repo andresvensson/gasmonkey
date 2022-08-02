@@ -8,6 +8,11 @@ include_once 'includes/gas_stats.php';
 # 2021-11-07, When MC season starts I have to adjust timeline and add MC in graph. Adjust statistics as well..
 # 2022-08-01, well vaccation happend..
 
+# Ideas for statistics column
+# Consumption, Totals, days since last fill
+# remove spareparts separate table. Maybe add history 
+#
+
 
 
 
@@ -28,20 +33,6 @@ include_once 'includes/gas_stats.php';
 
 <body style="background-color:#e2fcd4;">
     <center>
-
-        <?php
-        # REMOVE!
-
-        #phpinfo();
-
-        #echo "<h1>Welcome to gas.andresvensson.se</h1>";
-
-        #$datenow = date('Y-m-d H:i');
-
-        #echo "<br>Time now: " . $datenow . "<br><br>";
-
-        ?>
-
 
         <br><br>
         <h1>Click on vehicle to add refill data</h1>
@@ -85,7 +76,7 @@ include_once 'includes/gas_stats.php';
                     # Spare parts - table
                     echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
                     foreach ($audi_sparepart_entries as $val) {
-                        echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . "</td></tr>";
+                        echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . " kr</td></tr>";
                     }
                     echo "</table>";
                     ?>
@@ -109,23 +100,23 @@ include_once 'includes/gas_stats.php';
                     <b>Kawasaki Statistics:</b><br>
 
                     <?php
-                    # AUDI STATS
+                    # KAWASAKI STATS
 
                     # total cost
-                    echo "Total cost: " . round(array_sum($audi_data['cost']) - 687.9) . " kr";
+                    echo "Total cost: " . round(array_sum($kawasaki_data['cost']) - 177.64) . " kr";
                     # total cost spareparts....
-                    echo "<br>Total cost for spareparts: " . round(array_sum($audi_spareparts['cost'])) . " kr";
+                    echo "<br>Total cost for spareparts: " . round(array_sum($kawasaki_spareparts['cost'])) . " kr";
                     # total cost for gas (presented in price/mil)
-                    $tot_mileage = (end($audi_data['mileage']) - 254575);
-                    echo "<br>Total cost for gas: " . round((array_sum($audi_gas['cost']) - 687.9) / $tot_mileage * 10) . " kr/mil";
+                    $tot_mileage = (end($kawasaki_data['mileage']) - 9940);
+                    echo "<br>Total cost for gas: " . round((array_sum($kawasaki_gas['cost']) - 177.64) / $tot_mileage * 10) . " kr/mil";
                     # Kilometers since vehicle purchase
                     echo "<br>Total distance: " . $tot_mileage . " km";
                     # Gas quantity
-                    echo "<br>Total gas quantity: " . round((array_sum($audi_gas['litre']) - 41.59)) . " litre";
+                    echo "<br>Total gas quantity: " . round((array_sum($kawasaki_gas['litre']) - 7.71)) . " litre";
                     # Spare parts - table
                     echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
-                    foreach ($audi_sparepart_entries as $val) {
-                        echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . "</td></tr>";
+                    foreach ($kawasaki_sparepart_entries as $val) {
+                        echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . " kr</td></tr>";
                     }
                     echo "</table>";
                     ?>
@@ -165,7 +156,7 @@ include_once 'includes/gas_stats.php';
                     # Spare parts - table
                     echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
                     foreach ($audi_sparepart_entries as $val) {
-                        echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . "</td></tr>";
+                        echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . " kr</td></tr>";
                     }
                     echo "</table>";
                     ?>

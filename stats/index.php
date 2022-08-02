@@ -15,7 +15,7 @@ include '../includes/dbh.gas.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='includes/Chart.js'></script>
     
-    <title>Stats Kawasaki</title>
+    <title>Stats</title>
 </head>
 <body style="background-color:#e2fcd4;">
 <center>

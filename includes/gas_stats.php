@@ -1,7 +1,7 @@
 <?php include 'dbh.gas.php';
 
 
-
+# This file provide stats for main index page.
 
 # tables:
 # mc_bobber
@@ -10,7 +10,8 @@
 
 # "data" = for statistics, "entries" = for time series
 
-# AUDI STATS
+
+## AUDI STATS ##
 $DB = "audi";
 
 $sql = "SELECT * FROM $DB;";
@@ -23,7 +24,7 @@ $audi_entries = array();
 $audi_entries = getdata_entries($conn, $sql, $audi_entries);
 #pre_r($audi_entries);
 
-# AUDI SPAREPARTS
+# Audi spareparts
 $sql = "SELECT * FROM $DB WHERE sparepart = 1";
 $audi_spareparts = get_sql_data($conn, $sql);
 
@@ -32,36 +33,35 @@ $audi_sparepart_entries = array();
 $audi_sparepart_entries = getdata_entries($conn, $sql, $audi_entries);
 #pre_r($audi_sparepart_entries);
 
-# AUDI EXCEPT SPAREPARTS
+# Audi EXCEPT spareparts
 $sql = "SELECT * FROM $DB WHERE sparepart = 0";
 $audi_gas = get_sql_data($conn, $sql);
 
 
 
-# MC stats
-# SET CORRECT DB!!
-$DB = "audi";
+## KAWASAKI STATS ##
+$DB = "kawasaki";
 
 $sql = "SELECT * FROM $DB;";
-$mc_data = get_sql_data($conn, $sql);
+$kawasaki_data = get_sql_data($conn, $sql);
 
 # list
-$mc_entries = array();
-$mc_entries = getdata_entries($conn, $sql, $mc_entries);
+$kawasaki_entries = array();
+$kawasaki_entries = getdata_entries($conn, $sql, $kawasaki_entries);
 #pre_r($audi_entries);
 
-# MC SPAREPARTS
+# Kawasaki spareparts
 $sql = "SELECT * FROM $DB WHERE sparepart = 1";
-$mc_spareparts = get_sql_data($conn, $sql);
+$kawasaki_spareparts = get_sql_data($conn, $sql);
 
 # list
-$mc_sparepart_entries = array();
-$mc_sparepart_entries = getdata_entries($conn, $sql, $mc_entries);
+$kawasaki_sparepart_entries = array();
+$kawasaki_sparepart_entries = getdata_entries($conn, $sql, $kawasaki_entries);
 #pre_r($audi_sparepart_entries);
 
-# MC EXCEPT SPAREPARTS
+# Kawasaki EXCEPT SPAREPARTS
 $sql = "SELECT * FROM $DB WHERE sparepart = 0";
-$mc_gas = get_sql_data($conn, $sql);
+$kawasaki_gas = get_sql_data($conn, $sql);
 
 
 
