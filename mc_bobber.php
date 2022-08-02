@@ -22,7 +22,7 @@ error_reporting(E_ALL);
 
 #phpinfo();
 
-echo "<h1>Add stats to Motorcycle!</h1>";
+echo "<h1>Add stats to Bobber!</h1>";
 
 $datenow = date('Y-m-d H:i');
 

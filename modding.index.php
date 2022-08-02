@@ -229,6 +229,97 @@ include_once 'includes/gas_stats.php';
 -->
 
 
+
+<?php
+    # ...SAVED FROM OLDER INDEX SITE...
+
+
+        # TimeLine (refill dates)
+        # Remove first date
+        $TL_dates = $audi_gas['refill_date'];
+        array_shift($TL_dates);
+
+
+
+        # loop Timeline (the refill dates) and get data
+        foreach ($TL_dates as $key => $value) {
+            if (isset($audi_gas['litre'][($key + 1)])) {
+                $liters = $audi_gas['litre'][($key + 1)];
+            }
+            if (isset($audi_gas['mileage'][($key + 1)])) {
+                $mileage = $audi_gas['mileage'][($key + 1)];
+
+                if (array_key_exists($key, $audi_gas['mileage'])) {
+                    $mile_adjuster = $audi_gas['mileage'][$key];
+                } else {
+                    $mile_adjuster = 254575;
+                }
+
+                $driven = $mileage - $mile_adjuster;
+                # avoid division by 0
+                if ($driven > 0) {
+                    $l_m = $liters / ($driven / 10);
+                    $liter_mile[] = $l_m;
+                }
+            }
+        }
+
+
+
+        $label_time_stamp = json_encode($TL_dates);
+        $label_liter_mil = json_encode($liter_mile);
+
+        ?>
+
+
+
+
+        <div class="chart-container" style="margin: auto; position: relative; height:80vh; width:80vw">
+            <canvas id="gasChart"></canvas>
+        </div>
+
+        <script>
+            var ctx = document.getElementById('gasChart').getContext('2d');
+
+            var labels = <?php echo $label_time_stamp; ?>
+
+            var ds_audi = <?php echo $label_liter_mil; ?>
+
+            var tempChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Audi',
+                        data: ds_audi,
+                        spanGaps: true,
+                        fill: false,
+                        borderColor: '#0000FF',
+                        backgroundColor: '#0000FF',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Timeline for fuel consumption"
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: 10
+                    }
+                }
+            });
+        </script>
+
+
+
+
+
+
+
+
         <br>
         <form>
             <input type="button" onclick="window.location.href='db_entries.php';" value="Database entries" />
