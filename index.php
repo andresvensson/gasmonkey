@@ -106,7 +106,7 @@ include_once 'includes/gas_stats.php';
 
                 </td>
                 <td>
-                    <b>Audi statistics:</b><br>
+                    <b>Kawasaki Statistics:</b><br>
 
                     <?php
                     # AUDI STATS
@@ -146,7 +146,7 @@ include_once 'includes/gas_stats.php';
 
                 </td>
                 <td>
-                    <b>Audi statistics:</b><br>
+                    <b>Bobber Statistics:</b><br>
 
                     <?php
                     # AUDI STATS
@@ -186,6 +186,7 @@ include_once 'includes/gas_stats.php';
         <br>
         <form>
             <input type="button" onclick="window.location.href='db_entries.php';" value="Database entries" />
+            <input type="button" onclick="window.location.href='stats/';" value="Statistics" />
         </form>
         <br>
 
