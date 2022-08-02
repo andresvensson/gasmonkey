@@ -25,9 +25,6 @@ include '../includes/dbh.gas.php';
 #phpinfo();
 
 echo "<h1>Statistics for Kawasaki</h1>";
-#echo "<h2>Statistics for Kawasaki</h2>";
-#echo "<h3>Statistics for Kawasaki</h3>";
-#echo "<h4>Statistics for Kawasaki</h4>";
 
 # GET STATS
 
