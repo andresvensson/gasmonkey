@@ -10,6 +10,7 @@ include_once 'includes/gas_stats.php';
 
 
 
+
 ?>
 
 <!DOCTYPE html>
@@ -29,21 +30,21 @@ include_once 'includes/gas_stats.php';
     <center>
 
         <?php
+        # REMOVE!
 
         #phpinfo();
 
-        echo "<h1>Welcome to gas.andresvensson.se</h1>";
+        #echo "<h1>Welcome to gas.andresvensson.se</h1>";
 
-        $datenow = date('Y-m-d H:i');
+        #$datenow = date('Y-m-d H:i');
 
-        echo "<br>Time now: " . $datenow . "<br><br>";
-
+        #echo "<br>Time now: " . $datenow . "<br><br>";
 
         ?>
 
 
         <br><br>
-        <h1>Click on vehicle to add a refill data</h1>
+        <h1>Click on vehicle to add refill data</h1>
 
 
         <style>
@@ -53,6 +54,8 @@ include_once 'includes/gas_stats.php';
         </style>
 
 
+        <hr>
+        </hr>
         <table>
             <tr>
                 <td>
@@ -63,26 +66,13 @@ include_once 'includes/gas_stats.php';
 
                 </td>
                 <td>
+                    <b>Audi statistics:</b><br>
 
-                    <a href="mc_kawasaki.php">
-                        <img src="images/kawa.png" alt="MC Kawasaki" style="max-width:100%;height:auto;" />
-                    </a>
-
-                </td>
-            </tr>
-
-            <tr>
-                <th><br>Audi statistics:</th>
-                <th><br>MC statistics:</th>
-            </tr>
-
-            <tr>
-                <td>
                     <?php
                     # AUDI STATS
 
                     # total cost
-                    echo "<br>Total cost: " . round(array_sum($audi_data['cost']) - 687.9) . " kr";
+                    echo "Total cost: " . round(array_sum($audi_data['cost']) - 687.9) . " kr";
                     # total cost spareparts....
                     echo "<br>Total cost for spareparts: " . round(array_sum($audi_spareparts['cost'])) . " kr";
                     # total cost for gas (presented in price/mil)
@@ -100,14 +90,29 @@ include_once 'includes/gas_stats.php';
                     echo "</table>";
                     ?>
                 </td>
-                <td>
-                    <?php
+            </tr>
+        </table>
 
-                    # MC STATS
-                    # change below text and set DB = "mc_bobber" in /includes/gas_stats.php/
-                    echo "No entries in DB yet. This will change when season starts.. <br>Audi entries displays for now..<br>";
+        <hr></hr>
+
+
+        <table>
+            <tr>
+                <td>
+
+                    <a href="mc_kawasaki.php">
+                        <img src="images/kawa.png" alt="MC Kawasaki" style="max-width:100%;height:auto;" />
+                    </a>
+
+                </td>
+                <td>
+                    <b>Audi statistics:</b><br>
+
+                    <?php
+                    # AUDI STATS
+
                     # total cost
-                    echo "<br>Total cost: " . round(array_sum($audi_data['cost']) - 687.9) . " kr";
+                    echo "Total cost: " . round(array_sum($audi_data['cost']) - 687.9) . " kr";
                     # total cost spareparts....
                     echo "<br>Total cost for spareparts: " . round(array_sum($audi_spareparts['cost'])) . " kr";
                     # total cost for gas (presented in price/mil)
@@ -123,96 +128,58 @@ include_once 'includes/gas_stats.php';
                         echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . "</td></tr>";
                     }
                     echo "</table>";
-
-                    #echo "<br>MC stats goes here..";
-                    ?></td>
+                    ?>
+                </td>
             </tr>
-
         </table>
-        <br>
+
+        <hr></hr>
 
 
-        <?php
+        <table>
+            <tr>
+                <td>
 
+                    <a href="mc_bobber.php">
+                        <img src="images/signal-2021-10-09-140539.jpeg" alt="MC Bobber" style="max-width:100%;height:auto;" />
+                    </a>
 
-        # TimeLine (refill dates)
-        # Remove first date
-        $TL_dates = $audi_gas['refill_date'];
-        array_shift($TL_dates);
+                </td>
+                <td>
+                    <b>Audi statistics:</b><br>
 
+                    <?php
+                    # AUDI STATS
 
-
-        # loop Timeline (the refill dates) and get data
-        foreach ($TL_dates as $key => $value) {
-            if (isset($audi_gas['litre'][($key + 1)])) {
-                $liters = $audi_gas['litre'][($key + 1)];
-            }
-            if (isset($audi_gas['mileage'][($key + 1)])) {
-                $mileage = $audi_gas['mileage'][($key + 1)];
-
-                if (array_key_exists($key, $audi_gas['mileage'])) {
-                    $mile_adjuster = $audi_gas['mileage'][$key];
-                } else {
-                    $mile_adjuster = 254575;
-                }
-
-                $driven = $mileage - $mile_adjuster;
-                # avoid division by 0
-                if ($driven > 0) {
-                    $l_m = $liters / ($driven / 10);
-                    $liter_mile[] = $l_m;
-                }
-            }
-        }
-
-
-
-        $label_time_stamp = json_encode($TL_dates);
-        $label_liter_mil = json_encode($liter_mile);
-
-        ?>
-
-
-
-
-        <div class="chart-container" style="margin: auto; position: relative; height:80vh; width:80vw">
-            <canvas id="gasChart"></canvas>
-        </div>
-
-        <script>
-            var ctx = document.getElementById('gasChart').getContext('2d');
-
-            var labels = <?php echo $label_time_stamp; ?>
-
-            var ds_audi = <?php echo $label_liter_mil; ?>
-
-            var tempChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Audi',
-                        data: ds_audi,
-                        spanGaps: true,
-                        fill: false,
-                        borderColor: '#0000FF',
-                        backgroundColor: '#0000FF',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: "Timeline for fuel consumption"
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: 10
+                    # total cost
+                    echo "Total cost: " . round(array_sum($audi_data['cost']) - 687.9) . " kr";
+                    # total cost spareparts....
+                    echo "<br>Total cost for spareparts: " . round(array_sum($audi_spareparts['cost'])) . " kr";
+                    # total cost for gas (presented in price/mil)
+                    $tot_mileage = (end($audi_data['mileage']) - 254575);
+                    echo "<br>Total cost for gas: " . round((array_sum($audi_gas['cost']) - 687.9) / $tot_mileage * 10) . " kr/mil";
+                    # Kilometers since vehicle purchase
+                    echo "<br>Total distance: " . $tot_mileage . " km";
+                    # Gas quantity
+                    echo "<br>Total gas quantity: " . round((array_sum($audi_gas['litre']) - 41.59)) . " litre";
+                    # Spare parts - table
+                    echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
+                    foreach ($audi_sparepart_entries as $val) {
+                        echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . "</td></tr>";
                     }
-                }
-            });
-        </script>
+                    echo "</table>";
+                    ?>
+                </td>
+            </tr>
+        </table>
+
+        <hr></hr>
+
+
+
+
+
+        
 
 
 
@@ -220,6 +187,7 @@ include_once 'includes/gas_stats.php';
         <form>
             <input type="button" onclick="window.location.href='db_entries.php';" value="Database entries" />
         </form>
+        <br>
 
     </center>
 
