@@ -30,12 +30,10 @@ include '../includes/dbh.gas.php';
 
 
 
-Soon to be...
-
 
 <?php
 
-echo "<h1>Statistics for Kawasaki</h1>";
+#echo "<h1>Statistics for Kawasaki</h1>";
 
 # GET STATS
 
@@ -68,15 +66,8 @@ $kawasaki_stats['consumption_latest'] = round(end($vechicle_data['litre']) / $ka
 $kawasaki_stats['cost_mile'] = round($kawasaki_stats['money_total'] / ($kawasaki_stats['miles_driven']), 3);
 $kawasaki_stats['cost_mile_latest'] = round(end($vechicle_data['cost']) / $kawasaki_stats['latest_driven'], 3);
 
-#$kawasaki_stats['consumption'] = $kawasaki_stats['consumption'];
-#$kawasaki_stats['consumption_latest'] = $kawasaki_stats['consumption_latest'];
-#$kawasaki_stats['cost_mile'] = $kawasaki_stats['cost_mile'];
 
-# here create a array with all kawasaki stats (before vars be rewritten)
-
-pre_r($kawasaki_stats);
-
-echo "<br><b>AVERAGE</b>";
+/* echo "<br><b>AVERAGE</b>";
 echo "<br>Consumption: <b>".$kawasaki_stats['consumption']."</b> liter/mil";
 echo "<br>Latest: <b>".$kawasaki_stats['consumption_latest']."</b> liter/mil";
 echo "<br>Cost: <b>".$kawasaki_stats['cost_mile']."</b> kr/mil";
@@ -96,15 +87,13 @@ echo "<br>";
 echo "<br>";
 echo "<br>";
 echo "<br>";
-echo "<br>";
+echo "<br>"; */
 # ADD LATER?
 # Gas price delta? graph?
 
-# Print array
-#pre_r($vechicle_data);
 
 
-echo "<h1>Statistics for Bobber</h1>";
+#echo "<h1>Statistics for Bobber</h1>";
 
 # BOBBER
 $DB = "mc_bobber";
@@ -115,54 +104,52 @@ $sql = "SELECT * FROM $DB WHERE sparepart = 1;";
 #$vechicle_spareparts = get_sql_data($conn, $sql);
 
 # VARS
+$bobber_stats = array();
 # money spent
-$m3 = round(array_sum($vechicle_data['cost']) -257.85);
-#$m3 = array_sum($vechicle_spareparts['cost']);
+$bobber_stats['money_total'] = round(array_sum($vechicle_data['cost']) -257.85);
+#$bobber_stats['money_total'] = array_sum($vechicle_spareparts['cost']);
 # Avoid errors. No spareparts registered in database
-$m2 = 1;
-$m1 = round($m3 - $m2);
+$bobber_stats['money_spareparts'] = 1;
+$bobber_stats['money_gas'] = round($bobber_stats['money_total'] - $bobber_stats['money_spareparts']);
 # volume
-$v1 = round(array_sum($vechicle_data['litre']) -12.14);
-$v2 = (end($vechicle_data['mileage']) -215738) /100;
-$v3 = count($vechicle_data['litre']) -1;
+$bobber_stats['litre_consumed'] = round(array_sum($vechicle_data['litre']) -12.14);
+$bobber_stats['miles_driven'] = (end($vechicle_data['mileage']) -215738) /100;
+$bobber_stats['refill_total'] = count($vechicle_data['litre']) -1;
 $bought = date_create('2022-03-18');
 $datenow = date('Y-m-d H:i');
-$v4 = date_diff($bought, new DateTime());
+$bobber_stats['time_firstfill'] = date_diff($bought, new DateTime());
 # average
-$a1 = round((array_sum($vechicle_data['litre']) -12.14) / ($v2), 3);
+$bobber_stats['consumption'] = round((array_sum($vechicle_data['litre']) -12.14) / ($bobber_stats['miles_driven']), 3);
 # is this correct?? Yes but km is wrong, pls divide with 100 (Compansate for 100 meters gauge?)
-$latest_driven = (end($vechicle_data['mileage']) - ($vechicle_data['mileage'][$v3 -1])) / 100;
-$a2 = round(end($vechicle_data['litre']) / $latest_driven, 3);
-$a3 = round($m1 / ($v2), 3);
-$a4 = round(end($vechicle_data['cost']) / $latest_driven, 3);
+$latest_driven = (end($vechicle_data['mileage']) - ($vechicle_data['mileage'][$bobber_stats['refill_total'] -1])) / 100;
+$bobber_stats['consumption_latest'] = round(end($vechicle_data['litre']) / $latest_driven, 3);
+$bobber_stats['cost_mile'] = round($bobber_stats['money_gas'] / ($bobber_stats['miles_driven']), 3);
+$bobber_stats['cost_mile_latest'] = round(end($vechicle_data['cost']) / $latest_driven, 3);
 
-echo "<br><b>AVERAGE</b>";
-echo "<br>Consumption: <b>".$a1."</b> liter/mil";
-echo "<br>Latest: <b>".$a2."</b> liter/mil";
-echo "<br>Cost: <b>".$a3."</b> kr/mil";
-echo "<br>Latest: <b>".$a4."</b> kr/mil";
+/* #echo "<br><b>AVERAGE</b>";
+echo "<br>Consumption: <b>".$bobber_stats['consumption']."</b> liter/mil";
+echo "<br>Latest: <b>".$bobber_stats['consumption_latest']."</b> liter/mil";
+echo "<br>Cost: <b>".$bobber_stats['cost_mile']."</b> kr/mil";
+echo "<br>Latest: <b>".$bobber_stats['cost_mile_latest']."</b> kr/mil";
 echo "<br>";
 echo "<br><b>MONEY SPENT</b>";
-echo "<br>Gas: <b>".$m1."</b> kr";
-echo "<br>Spareparts: <b>".$m2."</b> kr";
-echo "<br>Total: <b>".$m3."</b> kr";
+echo "<br>Gas: <b>".$bobber_stats['money_gas']."</b> kr";
+echo "<br>Spareparts: <b>".$bobber_stats['money_spareparts']."</b> kr";
+echo "<br>Total: <b>".$bobber_stats['money_total']."</b> kr";
 echo "<br>";
 echo "<br><b>VOLUME</b>";
-echo "<br>Gas consumed: <b>".$v1."</b> liter";
-echo "<br>Miles driven: <b>".$v2."</b> mil";
-echo "<br>total refills: <b>".$v3."</b> times";
-echo "<br>Time since first fill: <b>".$v4->format('%y years %a days')."</b>";
+echo "<br>Gas consumed: <b>".$bobber_stats['litre_consumed']."</b> liter";
+echo "<br>Miles driven: <b>".$bobber_stats['miles_driven']."</b> mil";
+echo "<br>total refills: <b>".$bobber_stats['refill_total']."</b> times";
+echo "<br>Time since first fill: <b>".$bobber_stats['time_firstfill']->format('%y years %a days')."</b>";
 echo "<br>";
 echo "<br>";
 echo "<br>";
 echo "<br>";
-echo "<br>";
+echo "<br>"; */
 
 
 
-
-# Print array
-#pre_r($vechicle_data);
 
 # Functions
 
