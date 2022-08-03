@@ -50,48 +50,48 @@ $vechicle_spareparts = get_sql_data($conn, $sql);
 # VARS
 $kawasaki_stats = array();
 # money spent
-$m1 = round(array_sum($vechicle_data['cost']) -177.64);
-$m3 = array_sum($vechicle_spareparts['cost']);
-$m2 = round($m1 - $m3);
+$kawasaki_stats['money_total'] = round(array_sum($vechicle_data['cost']) -177.64);
+$kawasaki_stats['money_spareparts'] = array_sum($vechicle_spareparts['cost']);
+$kawasaki_stats['money_gas'] = round($kawasaki_stats['money_total'] - $kawasaki_stats['money_spareparts']);
 # volume
-$v1 = round(array_sum($vechicle_data['litre']) -7.71);
-$v2 = (end($vechicle_data['mileage']) -9940) /10;
+$kawasaki_stats['litre_consumed'] = round(array_sum($vechicle_data['litre']) -7.71);
+$kawasaki_stats['miles_driven'] = (end($vechicle_data['mileage']) -9940) /10;
 # -2 ???!!!
-$v3 = count($vechicle_data['litre']) -1;
-$bought = date_create('2022-04-23');
+$kawasaki_stats['refill_total'] = count($vechicle_data['litre']) -1;
+$kawasaki_stats['time_bought'] = date_create('2022-04-23');
 $datenow = date('Y-m-d H:i');
-$v4 = date_diff($bought, new DateTime());
+$kawasaki_stats['time_firstfill'] = date_diff($kawasaki_stats['time_bought'], new DateTime());
 # average
-$a1 = round((array_sum($vechicle_data['litre']) -7.71) / ($v2), 3);
-$latest_driven = (end($vechicle_data['mileage']) - ($vechicle_data['mileage'][$v3])) / 10;
-$a2 = round(end($vechicle_data['litre']) / $latest_driven, 3);
-$a3 = round($m1 / ($v2), 3);
-$a4 = round(end($vechicle_data['cost']) / $latest_driven, 3);
+$kawasaki_stats['consumption'] = round((array_sum($vechicle_data['litre']) -7.71) / ($kawasaki_stats['miles_driven']), 3);
+$kawasaki_stats['latest_driven'] = (end($vechicle_data['mileage']) - ($vechicle_data['mileage'][$kawasaki_stats['refill_total']])) / 10;
+$kawasaki_stats['consumption_latest'] = round(end($vechicle_data['litre']) / $kawasaki_stats['latest_driven'], 3);
+$kawasaki_stats['cost_mile'] = round($kawasaki_stats['money_total'] / ($kawasaki_stats['miles_driven']), 3);
+$kawasaki_stats['cost_mile_latest'] = round(end($vechicle_data['cost']) / $kawasaki_stats['latest_driven'], 3);
 
-$kawasaki_stats['consumption'] = $a1;
-$kawasaki_stats['consumption_latest'] = $a2;
-$kawasaki_stats['cost_mile'] = $a3;
+#$kawasaki_stats['consumption'] = $kawasaki_stats['consumption'];
+#$kawasaki_stats['consumption_latest'] = $kawasaki_stats['consumption_latest'];
+#$kawasaki_stats['cost_mile'] = $kawasaki_stats['cost_mile'];
 
 # here create a array with all kawasaki stats (before vars be rewritten)
 
 pre_r($kawasaki_stats);
 
 echo "<br><b>AVERAGE</b>";
-echo "<br>Consumption: <b>".$a1."</b> liter/mil";
-echo "<br>Latest: <b>".$a2."</b> liter/mil";
-echo "<br>Cost: <b>".$a3."</b> kr/mil";
-echo "<br>Latest: <b>".$a4."</b> kr/mil";
+echo "<br>Consumption: <b>".$kawasaki_stats['consumption']."</b> liter/mil";
+echo "<br>Latest: <b>".$kawasaki_stats['consumption_latest']."</b> liter/mil";
+echo "<br>Cost: <b>".$kawasaki_stats['cost_mile']."</b> kr/mil";
+echo "<br>Latest: <b>".$kawasaki_stats['cost_mile_latest']."</b> kr/mil";
 echo "<br>";
 echo "<br><b>MONEY SPENT</b>";
-echo "<br>Gas: <b>".$m2."</b> kr";
-echo "<br>Spareparts: <b>".$m3."</b> kr";
-echo "<br>Total: <b>".$m1."</b> kr";
+echo "<br>Gas: <b>".$kawasaki_stats['money_gas']."</b> kr";
+echo "<br>Spareparts: <b>".$kawasaki_stats['money_spareparts']."</b> kr";
+echo "<br>Total: <b>".$kawasaki_stats['money_total']."</b> kr";
 echo "<br>";
 echo "<br><b>VOLUME</b>";
-echo "<br>Gas consumed: <b>".$v1."</b> liter";
-echo "<br>Miles driven: <b>".$v2."</b> mil";
-echo "<br>total refills: <b>".$v3."</b> times";
-echo "<br>Time since first fill: <b>".$v4->format('%y years %a days')."</b>";
+echo "<br>Gas consumed: <b>".$kawasaki_stats['litre_consumed']."</b> liter";
+echo "<br>Miles driven: <b>".$kawasaki_stats['miles_driven']."</b> mil";
+echo "<br>total refills: <b>".$kawasaki_stats['refill_total']."</b> times";
+echo "<br>Time since first fill: <b>".$kawasaki_stats['time_firstfill']->format('%y years %a days')."</b>";
 echo "<br>";
 echo "<br>";
 echo "<br>";
