@@ -35,38 +35,46 @@ Soon to be...
 
 <?php
 
-#phpinfo();
-
 echo "<h1>Statistics for Kawasaki</h1>";
 
 # GET STATS
 
-# Kawasaki
+
+# KAWASAKI
 $DB = "kawasaki";
 $sql = "SELECT * FROM $DB;";
-$mc_data = get_sql_data($conn, $sql);
+$vechicle_data = get_sql_data($conn, $sql);
 $sql = "SELECT * FROM $DB WHERE sparepart = 1;";
-$mc_spareparts = get_sql_data($conn, $sql);
+$vechicle_spareparts = get_sql_data($conn, $sql);
 
 # VARS
+$kawasaki_stats = array();
 # money spent
-$m1 = round(array_sum($mc_data['cost']) -177.64);
-$m3 = array_sum($mc_spareparts['cost']);
+$m1 = round(array_sum($vechicle_data['cost']) -177.64);
+$m3 = array_sum($vechicle_spareparts['cost']);
 $m2 = round($m1 - $m3);
 # volume
-$v1 = round(array_sum($mc_data['litre']) -7.71);
-$v2 = (end($mc_data['mileage']) -9940) /10;
+$v1 = round(array_sum($vechicle_data['litre']) -7.71);
+$v2 = (end($vechicle_data['mileage']) -9940) /10;
 # -2 ???!!!
-$v3 = count($mc_data['litre']) -1;
+$v3 = count($vechicle_data['litre']) -1;
 $bought = date_create('2022-04-23');
 $datenow = date('Y-m-d H:i');
 $v4 = date_diff($bought, new DateTime());
 # average
-$a1 = round((array_sum($mc_data['litre']) -7.71) / ($v2), 3);
-$latest_driven = (end($mc_data['mileage']) - ($mc_data['mileage'][$v3])) / 10;
-$a2 = round(end($mc_data['litre']) / $latest_driven, 3);
+$a1 = round((array_sum($vechicle_data['litre']) -7.71) / ($v2), 3);
+$latest_driven = (end($vechicle_data['mileage']) - ($vechicle_data['mileage'][$v3])) / 10;
+$a2 = round(end($vechicle_data['litre']) / $latest_driven, 3);
 $a3 = round($m1 / ($v2), 3);
-$a4 = round(end($mc_data['cost']) / $latest_driven, 3);
+$a4 = round(end($vechicle_data['cost']) / $latest_driven, 3);
+
+$kawasaki_stats['consumption'] = $a1;
+$kawasaki_stats['consumption_latest'] = $a2;
+$kawasaki_stats['cost_mile'] = $a3;
+
+# here create a array with all kawasaki stats (before vars be rewritten)
+
+pre_r($kawasaki_stats);
 
 echo "<br><b>AVERAGE</b>";
 echo "<br>Consumption: <b>".$a1."</b> liter/mil";
@@ -93,40 +101,40 @@ echo "<br>";
 # Gas price delta? graph?
 
 # Print array
-#pre_r($mc_data);
+#pre_r($vechicle_data);
 
 
 echo "<h1>Statistics for Bobber</h1>";
 
-# Bobber
+# BOBBER
 $DB = "mc_bobber";
 $sql = "SELECT * FROM $DB;";
-$mc_data = get_sql_data($conn, $sql);
+$vechicle_data = get_sql_data($conn, $sql);
 $sql = "SELECT * FROM $DB WHERE sparepart = 1;";
 # blocked until I got spareparts registered
-#$mc_spareparts = get_sql_data($conn, $sql);
+#$vechicle_spareparts = get_sql_data($conn, $sql);
 
 # VARS
 # money spent
-$m3 = round(array_sum($mc_data['cost']) -257.85);
-#$m3 = array_sum($mc_spareparts['cost']);
+$m3 = round(array_sum($vechicle_data['cost']) -257.85);
+#$m3 = array_sum($vechicle_spareparts['cost']);
 # Avoid errors. No spareparts registered in database
 $m2 = 1;
 $m1 = round($m3 - $m2);
 # volume
-$v1 = round(array_sum($mc_data['litre']) -12.14);
-$v2 = (end($mc_data['mileage']) -215738) /100;
-$v3 = count($mc_data['litre']) -1;
+$v1 = round(array_sum($vechicle_data['litre']) -12.14);
+$v2 = (end($vechicle_data['mileage']) -215738) /100;
+$v3 = count($vechicle_data['litre']) -1;
 $bought = date_create('2022-03-18');
 $datenow = date('Y-m-d H:i');
 $v4 = date_diff($bought, new DateTime());
 # average
-$a1 = round((array_sum($mc_data['litre']) -12.14) / ($v2), 3);
+$a1 = round((array_sum($vechicle_data['litre']) -12.14) / ($v2), 3);
 # is this correct?? Yes but km is wrong, pls divide with 100 (Compansate for 100 meters gauge?)
-$latest_driven = (end($mc_data['mileage']) - ($mc_data['mileage'][$v3 -1])) / 100;
-$a2 = round(end($mc_data['litre']) / $latest_driven, 3);
+$latest_driven = (end($vechicle_data['mileage']) - ($vechicle_data['mileage'][$v3 -1])) / 100;
+$a2 = round(end($vechicle_data['litre']) / $latest_driven, 3);
 $a3 = round($m1 / ($v2), 3);
-$a4 = round(end($mc_data['cost']) / $latest_driven, 3);
+$a4 = round(end($vechicle_data['cost']) / $latest_driven, 3);
 
 echo "<br><b>AVERAGE</b>";
 echo "<br>Consumption: <b>".$a1."</b> liter/mil";
@@ -154,7 +162,7 @@ echo "<br>";
 
 
 # Print array
-#pre_r($mc_data);
+#pre_r($vechicle_data);
 
 # Functions
 

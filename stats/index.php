@@ -3,7 +3,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include '../includes/dbh.gas.php';
+include_once '../includes/dbh.gas.php';
+# can include this when I rename vars/arrays
+#include_once '../stats/numbers.php';
+
 
 ?>
 
