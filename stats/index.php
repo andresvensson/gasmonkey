@@ -3,8 +3,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-#include_once '../includes/dbh.gas.php';
-# can include this when I rename vars/arrays
 include_once '../stats/numbers.php';
 
 
@@ -25,7 +23,30 @@ include_once '../stats/numbers.php';
 
 <?php
 
-#phpinfo();
+
+echo "<h1>Statistics for Audi</h1>";
+echo "<br><b>AVERAGE</b>";
+echo "<br>Consumption: <b>".$audi_stats['consumption']."</b> liter/mil";
+echo "<br>Latest: <b>".$audi_stats['consumption_latest']."</b> liter/mil";
+echo "<br>Cost: <b>".$audi_stats['cost_mile']."</b> kr/mil";
+echo "<br>Latest: <b>".$audi_stats['cost_mile_latest']."</b> kr/mil";
+echo "<br>";
+echo "<br><b>MONEY SPENT</b>";
+echo "<br>Gas: <b>".$audi_stats['money_gas']."</b> kr";
+echo "<br>Spareparts: <b>".$audi_stats['money_spareparts']."</b> kr";
+echo "<br>Total: <b>".$audi_stats['money_total']."</b> kr";
+echo "<br>";
+echo "<br><b>VOLUME</b>";
+echo "<br>Gas consumed: <b>".$audi_stats['litre_consumed']."</b> liter";
+echo "<br>Miles driven: <b>".$audi_stats['miles_driven']."</b> mil";
+echo "<br>total refills: <b>".$audi_stats['refill_total']."</b> times";
+echo "<br>Time since first fill: <b>".$audi_stats['time_firstfill']->format('%y years %a days')."</b>";
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo "<br>";
+
 
 echo "<h1>Statistics for Kawasaki</h1>";
 echo "<br><b>AVERAGE</b>";
