@@ -3,7 +3,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+# this will go
 include_once 'includes/gas_stats.php';
+# keeper
+include_once 'stats/numbers.php';
+
 
 # 2021-11-07, When MC season starts I have to adjust timeline and add MC in graph. Adjust statistics as well..
 # 2022-08-01, well vaccation happend..
@@ -101,6 +105,8 @@ include_once 'includes/gas_stats.php';
 
                     <?php
                     # KAWASAKI STATS
+
+                    echo "<br>Consumption: <b>".$kawasaki_stats['consumption']."</b> liter/mil";
 
                     # total cost
                     echo "Total cost: " . round(array_sum($kawasaki_data['cost']) - 177.64) . " kr";
