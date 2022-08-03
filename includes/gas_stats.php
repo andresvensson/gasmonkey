@@ -17,7 +17,7 @@ include 'dbh.gas.php';
 $DB = "audi";
 
 $sql = "SELECT * FROM $DB;";
-$audi_data = get_sql_stats($conn, $sql);
+$audi_data = get_sql_stats1($conn, $sql);
 #echo "audi_data:<br>";
 #pre_r($audi_data);
 
@@ -28,7 +28,7 @@ $audi_entries = getdata_entries($conn, $sql, $audi_entries);
 
 # Audi spareparts
 $sql = "SELECT * FROM $DB WHERE sparepart = 1";
-$audi_spareparts = get_sql_stats($conn, $sql);
+$audi_spareparts = get_sql_stats1($conn, $sql);
 
 # list
 $audi_sparepart_entries = array();
@@ -37,7 +37,7 @@ $audi_sparepart_entries = getdata_entries($conn, $sql, $audi_entries);
 
 # Audi EXCEPT spareparts
 $sql = "SELECT * FROM $DB WHERE sparepart = 0";
-$audi_gas = get_sql_stats($conn, $sql);
+$audi_gas = get_sql_stats1($conn, $sql);
 
 
 
@@ -45,7 +45,7 @@ $audi_gas = get_sql_stats($conn, $sql);
 $DB = "kawasaki";
 
 $sql = "SELECT * FROM $DB;";
-$kawasaki_data = get_sql_stats($conn, $sql);
+$kawasaki_data = get_sql_stats1($conn, $sql);
 
 # list
 $kawasaki_entries = array();
@@ -54,7 +54,7 @@ $kawasaki_entries = getdata_entries($conn, $sql, $kawasaki_entries);
 
 # Kawasaki spareparts
 $sql = "SELECT * FROM $DB WHERE sparepart = 1";
-$kawasaki_spareparts = get_sql_stats($conn, $sql);
+$kawasaki_spareparts = get_sql_stats1($conn, $sql);
 
 # list
 $kawasaki_sparepart_entries = array();
@@ -63,12 +63,12 @@ $kawasaki_sparepart_entries = getdata_entries($conn, $sql, $kawasaki_entries);
 
 # Kawasaki EXCEPT SPAREPARTS
 $sql = "SELECT * FROM $DB WHERE sparepart = 0";
-$kawasaki_gas = get_sql_stats($conn, $sql);
+$kawasaki_gas = get_sql_stats1($conn, $sql);
 
 
 
 # Get data with specific sql and return non specific array, example: audi_gas[0]['value_id']. Easy to sum for statistis
-function get_sql_stats($conn, $sql)
+function get_sql_stats1($conn, $sql)
 {
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
@@ -163,12 +163,3 @@ function getdata_entries($conn, $sql, $data)
 }
 
 
-
-
-/* // Nice way to print datasets/arrays
-function pre_r($array)
-{
-    echo "<pre>";
-    print_r($array);
-    echo "</pre>";
-} */
