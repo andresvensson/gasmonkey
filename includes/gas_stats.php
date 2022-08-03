@@ -1,4 +1,6 @@
-<?php include 'dbh.gas.php';
+<?php 
+include 'dbh.gas.php';
+#include_once 'stats/numbers.php';
 
 
 # This file provide stats for main index page.
