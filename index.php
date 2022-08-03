@@ -6,6 +6,8 @@ error_reporting(E_ALL);
 #include_once 'includes/gas_stats.php';
 include_once 'stats/numbers.php';
 
+# THIS IS NEW?
+
 # 2021-11-07, When MC season starts I have to adjust timeline and add MC in graph. Adjust statistics as well..
 # 2022-08-01, well vaccation happend..
 
@@ -16,12 +18,6 @@ include_once 'stats/numbers.php';
 
 
 
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 1c8cd5a0250ef2a207cd95827b3db9e527efbe9d
 ?>
 
 <!DOCTYPE html>
