@@ -18,8 +18,6 @@ include_once 'stats/numbers.php';
 
 
 
-
-
 ?>
 
 <!DOCTYPE html>
