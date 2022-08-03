@@ -3,11 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-# this will go
-include_once 'includes/gas_stats.php';
-# keeper
+#include_once 'includes/gas_stats.php';
 include_once 'stats/numbers.php';
-
 
 # 2021-11-07, When MC season starts I have to adjust timeline and add MC in graph. Adjust statistics as well..
 # 2022-08-01, well vaccation happend..
@@ -61,35 +58,33 @@ include_once 'stats/numbers.php';
 
                 </td>
                 <td>
-                    <b>Audi statistics:</b><br>
+                    <b>Audi A3 FSI -05:</b><br><br>
 
                     <?php
                     # AUDI STATS
 
-                    # total cost
-                    echo "Total cost: " . round(array_sum($audi_data['cost']) - 687.9) . " kr";
-                    # total cost spareparts....
-                    echo "<br>Total cost for spareparts: " . round(array_sum($audi_spareparts['cost'])) . " kr";
-                    # total cost for gas (presented in price/mil)
-                    $tot_mileage = (end($audi_data['mileage']) - 254575);
-                    echo "<br>Total cost for gas: " . round((array_sum($audi_gas['cost']) - 687.9) / $tot_mileage * 10) . " kr/mil";
-                    # Kilometers since vehicle purchase
-                    echo "<br>Total distance: " . $tot_mileage . " km";
-                    # Gas quantity
-                    echo "<br>Total gas quantity: " . round((array_sum($audi_gas['litre']) - 41.59)) . " litre";
-                    # Spare parts - table
-                    echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
+                    echo "Consumption: <b>".$audi_stats['consumption']."</b> liter/mil<br>";
+                    echo "Latest: <b>".$audi_stats['consumption_latest']."</b> liter/mil<br>";
+                    echo "<br><u>Total</u><br>";
+                    echo $audi_stats['refill_total']." refills<br>";
+                    echo $audi_stats['litre_consumed']." liter<br>";
+                    echo $audi_stats['miles_driven']." mil distance<br>";
+                    echo $audi_stats['money_total']." kr, gas + parts<br>";
+                    echo $audi_stats['time_firstfill']->format('%y years %a days')." since first fill</b>";
+
+
+                    # Spare parts - table (used it with gas_stats.php)
+                    /* echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
                     foreach ($audi_sparepart_entries as $val) {
                         echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . " kr</td></tr>";
                     }
-                    echo "</table>";
+                    echo "</table>"; */
                     ?>
                 </td>
             </tr>
         </table>
 
         <hr></hr>
-
 
         <table>
             <tr>
@@ -101,37 +96,33 @@ include_once 'stats/numbers.php';
 
                 </td>
                 <td>
-                    <b>Kawasaki Statistics:</b><br>
+                    <b>Kawasaki ER-6f -09:</b><br><br>
 
                     <?php
                     # KAWASAKI STATS
 
-                    echo "<br>Consumption: <b>".$kawasaki_stats['consumption']."</b> liter/mil";
+                    echo "Consumption: <b>".$kawasaki_stats['consumption']."</b> liter/mil<br>";
+                    echo "Latest: <b>".$kawasaki_stats['consumption_latest']."</b> liter/mil<br>";
+                    echo "<br><u>Total</u><br>";
+                    echo $kawasaki_stats['refill_total']." refills<br>";
+                    echo $kawasaki_stats['litre_consumed']." liter<br>";
+                    echo $kawasaki_stats['miles_driven']." mil distance<br>";
+                    echo $kawasaki_stats['money_total']." kr, gas + parts<br>";
+                    echo $kawasaki_stats['time_firstfill']->format('%y years %a days')." since first fill</b>";
 
-                    # total cost
-                    echo "Total cost: " . round(array_sum($kawasaki_data['cost']) - 177.64) . " kr";
-                    # total cost spareparts....
-                    echo "<br>Total cost for spareparts: " . round(array_sum($kawasaki_spareparts['cost'])) . " kr";
-                    # total cost for gas (presented in price/mil)
-                    $tot_mileage = (end($kawasaki_data['mileage']) - 9940);
-                    echo "<br>Total cost for gas: " . round((array_sum($kawasaki_gas['cost']) - 177.64) / $tot_mileage * 10) . " kr/mil";
-                    # Kilometers since vehicle purchase
-                    echo "<br>Total distance: " . $tot_mileage . " km";
-                    # Gas quantity
-                    echo "<br>Total gas quantity: " . round((array_sum($kawasaki_gas['litre']) - 7.71)) . " litre";
+
                     # Spare parts - table
-                    echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
+                    /* echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
                     foreach ($kawasaki_sparepart_entries as $val) {
                         echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . " kr</td></tr>";
                     }
-                    echo "</table>";
+                    echo "</table>"; */
                     ?>
                 </td>
             </tr>
         </table>
 
         <hr></hr>
-
 
         <table>
             <tr>
@@ -143,28 +134,26 @@ include_once 'stats/numbers.php';
 
                 </td>
                 <td>
-                    <b>Bobber Statistics:</b><br>
+                    <b>Yamaha XV750 Special -82:</b><br>
 
                     <?php
-                    # AUDI STATS
+                    # BOBBER STATS
 
-                    # total cost
-                    echo "Total cost: " . round(array_sum($audi_data['cost']) - 687.9) . " kr";
-                    # total cost spareparts....
-                    echo "<br>Total cost for spareparts: " . round(array_sum($audi_spareparts['cost'])) . " kr";
-                    # total cost for gas (presented in price/mil)
-                    $tot_mileage = (end($audi_data['mileage']) - 254575);
-                    echo "<br>Total cost for gas: " . round((array_sum($audi_gas['cost']) - 687.9) / $tot_mileage * 10) . " kr/mil";
-                    # Kilometers since vehicle purchase
-                    echo "<br>Total distance: " . $tot_mileage . " km";
-                    # Gas quantity
-                    echo "<br>Total gas quantity: " . round((array_sum($audi_gas['litre']) - 41.59)) . " litre";
+                    echo "Consumption: <b>".$bobber_stats['consumption']."</b> liter/mil<br>";
+                    echo "Latest: <b>".$bobber_stats['consumption_latest']."</b> liter/mil<br>";
+                    echo "<br><u>Total</u><br>";
+                    echo $bobber_stats['refill_total']." refills<br>";
+                    echo $bobber_stats['litre_consumed']." liter<br>";
+                    echo $bobber_stats['miles_driven']." mil distance<br>";
+                    echo $bobber_stats['money_total']." kr, gas + parts<br>";
+                    echo $bobber_stats['time_firstfill']->format('%y years %a days')." since first fill</b>";
+
                     # Spare parts - table
-                    echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
+                    /* echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
                     foreach ($audi_sparepart_entries as $val) {
                         echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . " kr</td></tr>";
                     }
-                    echo "</table>";
+                    echo "</table>"; */
                     ?>
                 </td>
             </tr>

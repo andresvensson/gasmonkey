@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 #include_once '../stats/numbers.php';
 include_once 'numbers.php';
 
-
 ?>
 
 <!DOCTYPE html>
