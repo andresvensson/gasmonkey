@@ -33,9 +33,43 @@ include '../includes/dbh.gas.php';
 
 <?php
 
-#echo "<h1>Statistics for Kawasaki</h1>";
+### STATS ###
 
-# GET STATS
+
+
+# AUDI
+$DB = "audi";
+$sql = "SELECT * FROM $DB;";
+$vechicle_data = get_sql_data($conn, $sql);
+$sql = "SELECT * FROM $DB WHERE sparepart = 1;";
+$vechicle_spareparts = get_sql_data($conn, $sql);
+
+# VARS
+$audi_stats = array();
+# money spent
+$audi_stats['money_total'] = round(array_sum($vechicle_data['cost']) -687.9);
+$audi_stats['money_spareparts'] = array_sum($vechicle_spareparts['cost']);
+$audi_stats['money_gas'] = round($audi_stats['money_total'] - $audi_stats['money_spareparts']);
+# volume
+$audi_stats['litre_consumed'] = round(array_sum($vechicle_data['litre']) -41.59);
+$audi_stats['miles_driven'] = (end($vechicle_data['mileage']) -254575) /10;
+# -2 ???!!!
+$audi_stats['refill_total'] = count($vechicle_data['litre']) -1;
+$audi_stats['time_bought'] = date_create('2022-04-23');
+$datenow = date('Y-m-d H:i');
+$audi_stats['time_firstfill'] = date_diff($audi_stats['time_bought'], new DateTime());
+# average
+$audi_stats['consumption'] = round((array_sum($vechicle_data['litre']) -41.59) / ($audi_stats['miles_driven']), 3);
+$audi_stats['latest_driven'] = (end($vechicle_data['mileage']) - ($vechicle_data['mileage'][$audi_stats['refill_total']])) / 10;
+$audi_stats['consumption_latest'] = round(end($vechicle_data['litre']) / $audi_stats['latest_driven'], 3);
+$audi_stats['cost_mile'] = round($audi_stats['money_total'] / ($audi_stats['miles_driven']), 3);
+$audi_stats['cost_mile_latest'] = round(end($vechicle_data['cost']) / $audi_stats['latest_driven'], 3);
+
+
+# ADD LATER?
+# Gas price delta? graph?
+
+
 
 
 # KAWASAKI
@@ -67,33 +101,6 @@ $kawasaki_stats['cost_mile'] = round($kawasaki_stats['money_total'] / ($kawasaki
 $kawasaki_stats['cost_mile_latest'] = round(end($vechicle_data['cost']) / $kawasaki_stats['latest_driven'], 3);
 
 
-/* echo "<br><b>AVERAGE</b>";
-echo "<br>Consumption: <b>".$kawasaki_stats['consumption']."</b> liter/mil";
-echo "<br>Latest: <b>".$kawasaki_stats['consumption_latest']."</b> liter/mil";
-echo "<br>Cost: <b>".$kawasaki_stats['cost_mile']."</b> kr/mil";
-echo "<br>Latest: <b>".$kawasaki_stats['cost_mile_latest']."</b> kr/mil";
-echo "<br>";
-echo "<br><b>MONEY SPENT</b>";
-echo "<br>Gas: <b>".$kawasaki_stats['money_gas']."</b> kr";
-echo "<br>Spareparts: <b>".$kawasaki_stats['money_spareparts']."</b> kr";
-echo "<br>Total: <b>".$kawasaki_stats['money_total']."</b> kr";
-echo "<br>";
-echo "<br><b>VOLUME</b>";
-echo "<br>Gas consumed: <b>".$kawasaki_stats['litre_consumed']."</b> liter";
-echo "<br>Miles driven: <b>".$kawasaki_stats['miles_driven']."</b> mil";
-echo "<br>total refills: <b>".$kawasaki_stats['refill_total']."</b> times";
-echo "<br>Time since first fill: <b>".$kawasaki_stats['time_firstfill']->format('%y years %a days')."</b>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "<br>"; */
-# ADD LATER?
-# Gas price delta? graph?
-
-
-
-#echo "<h1>Statistics for Bobber</h1>";
 
 # BOBBER
 $DB = "mc_bobber";
