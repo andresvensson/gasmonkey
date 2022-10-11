@@ -38,7 +38,7 @@ echo "<br>Time now: ".$datenow."<br><br>";
     <input type="hidden" name="database" value="kawasaki"/>
     <label for="refill_date">Date: <input type="date" name="refill_date" value="<?php echo date('Y-m-d'); ?>"></label>
     <br><br>
-    <label for="mileage">Mileage: <input type="number" name="mileage" min="9900" max="19999" step="1"></label>
+    <label for="mileage">Mileage: <input type="number" name="mileage" min="20000" max="30000" step="1"></label>
     <br><br>
     <label for="cost">Cost: <input type="number" name="cost" min="1" max="50000" step="any"></label>
     <br><br>
