@@ -74,6 +74,32 @@ echo "<table border='1'><tr>
 
 
 
+    echo "<br><br>Stored data for Africa Twin:" . "<br>";
+    echo "<table border='1'><tr>
+        <th>Id</th><th>Time stamp</th><th>Refill date</th>
+        <th>Mileage</th><th>Cost</th><th>Litre</th><th>Spare part</th>
+        <th>Name</th><th>Comment</th><th>Action</th>";
+    
+        $sql = "SELECT * FROM atas;";
+        $result = mysqli_query($conn, $sql);
+        #$resultCheck = mysqli_num_rows($result);
+        
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<form action='includes/db.delete.php' method='post'>";
+                echo "<tr><input type='hidden' name='value_id' value='" . $row['value_id'] . "'/>" . 
+                "<input type='hidden' name='database' value='test_audi'/>";
+                echo "<td>{$row['value_id']}</td><td>" . $row['time_stamp'] . "</td><td>" . $row['refill_date']
+                . "</td><td>" . $row['mileage'] . "</td><td>" . $row['cost'] . "</td><td>" . $row['litre']
+                . "</td><td>" . $row['sparepart'] . "</td><td>" . $row['name'] . "</td><td>" . $row['comment']
+                . "</td><td>" . "<input type='submit' value='Delete'></td>";
+                echo "</tr></form>";
+            }
+        }
+        echo "</table>";
+
+
+
     echo "<br><br>Stored data for Kawasaki:" . "<br>";
     echo "<table border='1'><tr>
         <th>Id</th><th>Time stamp</th><th>Refill date</th>

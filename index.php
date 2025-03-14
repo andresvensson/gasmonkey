@@ -91,6 +91,44 @@ include_once 'stats/numbers.php';
             <tr>
                 <td>
 
+                    <a href="mc_atas.php">
+                        <img src="images/ATAS.png" alt="Africa Twin" style="max-width:100%;height:auto;" />
+                    </a>
+
+                </td>
+                <td>
+                    <b>Africa Twin Adventure Sports -20:</b><br><br>
+
+                    <?php
+                    # ATAS STATS
+
+                    echo "Consumption: <b>".$atas_stats['consumption']."</b> liter/mil<br>";
+                    echo "Latest: <b>".$atas_stats['consumption_latest']."</b> liter/mil<br>";
+                    echo "<br><u>Total</u><br>";
+                    echo $atas_stats['refill_total']." refills<br>";
+                    echo $atas_stats['litre_consumed']." liter<br>";
+                    echo $atas_stats['miles_driven']." mil distance<br>";
+                    echo $atas_stats['money_total']." kr, gas + parts<br>";
+                    echo $atas_stats['time_firstfill']->format('%y years %a days')." since first fill</b>";
+
+
+                    # Spare parts - table
+                    /* echo "<br><br><table><tr><th>Latest Spare Parts</th></tr><tr><th>Date</th><th>Name</th><th>Cost</th></tr>";
+                    foreach ($kawasaki_sparepart_entries as $val) {
+                        echo "<tr><td>" . $val['refill_date'] . "</td><td>" . $val['name'] . "</td><td>" . $val['cost'] . " kr</td></tr>";
+                    }
+                    echo "</table>"; */
+                    ?>
+                </td>
+            </tr>
+        </table>
+
+        <hr></hr>
+
+        <table>
+            <tr>
+                <td>
+
                     <a href="mc_kawasaki.php">
                         <img src="images/kawa.png" alt="MC Kawasaki" style="max-width:100%;height:auto;" />
                     </a>

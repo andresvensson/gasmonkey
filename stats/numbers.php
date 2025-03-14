@@ -72,6 +72,35 @@ $audi_stats['cost_mile_latest'] = round(end($vechicle_data['cost']) / $audi_stat
 
 
 
+# AFRICA TWIN
+$DB = "atas";
+$sql = "SELECT * FROM $DB;";
+$vechicle_data = get_sql_data($conn, $sql);
+$sql = "SELECT * FROM $DB WHERE sparepart = 1;";
+$vechicle_spareparts = get_sql_data($conn, $sql);
+
+# VARS
+$atas_stats = array();
+# money spent
+$atas_stats['money_total'] = round(array_sum($vechicle_data['cost']) -177.64);
+$atas_stats['money_spareparts'] = array_sum($vechicle_spareparts['cost']);
+$atas_stats['money_gas'] = round($atas_stats['money_total'] - $atas_stats['money_spareparts']);
+# volume
+$atas_stats['litre_consumed'] = round(array_sum($vechicle_data['litre']) -7.71);
+$atas_stats['miles_driven'] = (end($vechicle_data['mileage']) -9940) /10;
+# -2 ???!!!
+$atas_stats['refill_total'] = count($vechicle_data['litre']) -1;
+$atas_stats['time_bought'] = date_create('2025-03-09');
+$datenow = date('Y-m-d H:i');
+$atas_stats['time_firstfill'] = date_diff($atas_stats['time_bought'], new DateTime());
+# average
+$atas_stats['consumption'] = round((array_sum($vechicle_data['litre']) -7.71) / ($atas_stats['miles_driven']), 3);
+$atas_stats['latest_driven'] = (end($vechicle_data['mileage']) - ($vechicle_data['mileage'][$atas_stats['refill_total']])) / 10;
+$atas_stats['consumption_latest'] = round(end($vechicle_data['litre']) / $atas_stats['latest_driven'], 3);
+$atas_stats['cost_mile'] = round($atas_stats['money_total'] / ($atas_stats['miles_driven']), 3);
+$atas_stats['cost_mile_latest'] = round(end($vechicle_data['cost']) / $atas_stats['latest_driven'], 3);
+
+
 
 # KAWASAKI
 $DB = "kawasaki";
