@@ -82,12 +82,12 @@ $vechicle_spareparts = get_sql_data($conn, $sql);
 # VARS
 $atas_stats = array();
 # money spent
-$atas_stats['money_total'] = round(array_sum($vechicle_data['cost']) -177.64);
+$atas_stats['money_total'] = round(array_sum($vechicle_data['cost']) -138.82);
 $atas_stats['money_spareparts'] = array_sum($vechicle_spareparts['cost']);
 $atas_stats['money_gas'] = round($atas_stats['money_total'] - $atas_stats['money_spareparts']);
 # volume
-$atas_stats['litre_consumed'] = round(array_sum($vechicle_data['litre']) -7.71);
-$atas_stats['miles_driven'] = (end($vechicle_data['mileage']) -9940) /10;
+$atas_stats['litre_consumed'] = round(array_sum($vechicle_data['litre']) -9.02);
+$atas_stats['miles_driven'] = (end($vechicle_data['mileage']) -49574) /10;
 # -2 ???!!!
 $atas_stats['refill_total'] = count($vechicle_data['litre']) -1;
 $atas_stats['time_bought'] = date_create('2025-03-09');
